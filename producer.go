@@ -15,6 +15,12 @@ func NewMProducer() *MProducer {
 	}
 }
 
+func (mp *MProducer) Stop() {
+	for p := range mp.pdChan {
+		p.Stop()
+	}
+}
+
 func (m *MProducer) AddRx(addr string) error {
 	config := nsqlib.NewConfig()
 	w, err := nsqlib.NewProducer(addr, config)

@@ -10,6 +10,10 @@ type Tconsumer struct {
 	*nsqlib.Consumer
 }
 
+func (t *Tconsumer) Stop() {
+	t.Consumer.Stop()
+}
+
 type Message struct {
 	*nsqlib.Message
 }
