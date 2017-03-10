@@ -13,11 +13,16 @@ type IPRoute struct {
 	Status  bool   `json:"status"`
 }
 
+func (i *IPRoute) Output(a int, b string) error {
+	return nil
+}
+
 func TestMProduer(t *testing.T) {
 	mp := NewMProducer()
 	if err := mp.AddRx("127.0.0.1:4150"); err != nil {
 		t.Fatal(err)
 	}
+	mp.SetLogger(&IPRoute{}, LogLevelDebug)
 	i := 0
 	for {
 		i++
