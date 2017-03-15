@@ -2,9 +2,7 @@ package supermq
 
 import (
 	"strconv"
-	//	"strings"
 	"testing"
-	"time"
 )
 
 type IPRoute struct {
@@ -27,10 +25,8 @@ func TestMProduer(t *testing.T) {
 	for {
 		i++
 		i = i % 10
-		//ta := strings.Repeat("abc", i)
-		time.Sleep(time.Second)
+		strI := strconv.Itoa(i)
 		mp.MultiPublish("dst2otlnk", [][]byte{
-			[]byte(`{"dst_ip":"127.0.0.` + strconv.Itoa(i) + `","out_link":"changshangguangdian"}`)})
-		//mp.MultiPublish("dst2otlnk", [][]byte{[]byte(ta)})
+			[]byte(`{"key":"` + strI + `","dst_ip":"127.0.0.` + strI + `","out_link":"HZ-CT"}`)})
 	}
 }

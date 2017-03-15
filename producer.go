@@ -44,18 +44,21 @@ func (m *MProducer) AddRx(addr string) error {
 }
 
 func (m *MProducer) MultiPublish(topic string, body [][]byte) (err error) {
-	for i := 0; i < len(m.poller); i++ {
-		onePder := <-m.poller
-		err = onePder.MultiPublish(topic, body)
+	if len(m.pdlist) == 0 {
+		return fmt.Errorf("no available producer")
+	}
+
+	tryCount := 0
+	for onePder := range m.poller {
+		tryCount++
 		m.poller <- onePder
+		err = onePder.MultiPublish(topic, body)
 		if err == nil {
 			return
-		} else {
-			fmt.Printf("publish to %s failed, try next\n", onePder.String())
+		}
+		if tryCount > len(m.pdlist) {
+			break
 		}
 	}
-	if err != nil {
-		return
-	}
-	return fmt.Errorf("no available producer")
+	return
 }
