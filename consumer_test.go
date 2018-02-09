@@ -2,7 +2,6 @@ package supermq
 
 import (
 	"fmt"
-	//	nsqlib "github.com/nsqio/go-nsq"
 	"testing"
 )
 
@@ -19,10 +18,8 @@ func TestTconsumer(t *testing.T) {
 	h := MyHandler{}
 	r, _ := NewTconsumer("dlresult", "ch1", h.HandleMessage)
 	fmt.Println(r.ConnectToNSQLookupds(
-		[]string{"192.168.30.192:4161", "192.168.30.221:4161"}))
-	//fmt.Println(r.ConnectToNSQDs(
-	//	[]string{"192.168.30.192:4150", "192.168.30.221:4150"}))
-
+		[]string{"192.168.29.78:4161", "192.168.29.162:4161"}))
+	fmt.Println(r.IsStarved())
 	stop := make(chan int)
 	<-stop
 }
