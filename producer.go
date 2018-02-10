@@ -44,7 +44,7 @@ func (m *MProducer) AddRx(addr string) error {
 }
 
 func (m *MProducer) MultiPublish(topic string, body [][]byte) (err error) {
-	for onePder := range m.pdlist {
+	for _, onePder := range m.pdlist {
 		err = onePder.MultiPublish(topic, body)
 		if err == nil {
 			return
